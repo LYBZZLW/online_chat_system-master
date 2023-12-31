@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--指定网页支持响应式：电脑和手机自适应-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ data['title'] }}</title>
+    <link rel="stylesheet" href="{{ static_url('dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static_url('css/common.css') }}">
+    {% block head %}{% end %}
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand" id="site_name" href="/">聊天网页APP</a>
+        <form class="form-inline">
+            {% if handler.name %}
+            <a href="/userprofile/" class="text-warning">{{ handler.name }}</a>
+            &nbsp;
+            <a href="/logout/" class="text-danger">退出</a>
+            {% else %}
+            <a href="/login/" class="btn btn-success my-2 my-sm-0">登录</a>
+            &nbsp;
+            <a href="/regist/" class="btn btn-danger my-2 my-sm-0">注册</a>
+            {% end %}
+        </form>
+    </nav>
+</div>
+
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-md-9 pad-right">
+            {% block content %}{% end %}
+        </div>
+        <div class="col-md-3 pad-left">
+            <div class="card">
+                <div class="card-header">
+                    技术架构
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <td class="text-primary" style="width: 50%">编程语言：</td>
+                            <td class="text-danger">Python</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">数据库：</td>
+                            <td class="text-danger">MySQL</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">后端框架：</td>
+                            <td class="text-danger">Tornado</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">表单验证：</td>
+                            <td class="text-danger">WTForms</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">数据库ORM：</td>
+                            <td class="text-danger">SQLAlchemy</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">加密工具：</td>
+                            <td class="text-danger">Werkzeug</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">WebSocket通信：</td>
+                            <td class="text-danger">SockJS-Tornado</td>
+                        </tr>
+                        <tr>
+                            <td class="text-primary">前端界面：</td>
+                            <td class="text-danger">HTML/JS/CSS</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/lazysizes/4.0.2/lazysizes.min.js"></script>
+<script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ static_url('js/request.js') }}"></script>
+{% block foot %}{% end %}
+</body>
+</html>

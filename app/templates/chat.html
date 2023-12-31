@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ static_url('ue/third-party/SyntaxHighlighter/shCoreDefault.css') }}">
+<script src="{{ static_url('ue/third-party/SyntaxHighlighter/shCore.js') }}"></script>
+<script type="text/javascript" charset="utf-8" src="{{ static_url('ue/ueditor.config.js') }}"></script>
+<script type="text/javascript" charset="utf-8" src="{{ static_url('ue/ueditor.all.min.js') }}"></script>
+<script type="text/javascript" charset="utf-8" src="{{ static_url('ue/lang/zh-cn/zh-cn.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+{% end %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page" style="margin-right: 20px">聊天室</li>
+        <div>
+            <select id="selectChannel" class="form-control form-control-placeholder"></select>
+        </div>
+    </ol>
+</nav>
+<div class="row" style="margin-top: 12px;">
+    <div class="col-md-12">
+        <div class="card" id="chat-card">
+            <div class="card-header">聊天消息</div>
+            <div class="card-body" id="chat-list">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="form-data">
+                    <div class="media">
+                        {% if handler.user %}
+                        <img class="mr-3" src="/static/uploads/{{ handler.user.face }}" style="width: 60px;height: 60px;">
+                        <div class="media-body">
+                            <h6>{{ handler.name }}</h6>
+                            <input type="hidden" name="name" id="input_name" value="{{ handler.name }}">
+                            <input type="hidden" name="face" id="input_face"
+                                   value="/static/uploads/{{ handler.user.face }}">
+                            <textarea name="content" id="editor" style="width: 100%;"></textarea>
+                        </div>
+                        {% else %}
+                        <img class="mr-3" src="{{ static_url('images/visitor.png') }}" style="height: 60px;width: 60px;">
+                        <div class="media-body">
+                            <h6>
+                                游客&nbsp;
+                                <a href="/login/">[登录]</a>&nbsp;
+                                <a href="/regist/">[注册]</a>
+                            </h6>
+                            <input type="hidden" name="name" id="input_name" value="游客">
+                            <input type="hidden" name="face" id="input_face" value="/static/images/visitor.png">
+                            <textarea name="content" id="editor" style="width: 100%;"></textarea>
+                        </div>
+                        {% end %}
+                    </div>
+                    <a style="margin-top: 12px;" class="btn btn-success float-right" href="javascript:void(0);"
+                       id="send_msg">发送消息</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+
+{% block foot %}
+<script>
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['bold', 'italic', 'underline', 'fullscreen', 'emotion', 'insertcode', 'preview']
+        ]
+    });
+</script>
+<script src="{{ static_url('js/chat.js') }}"></script>
+{% end %}

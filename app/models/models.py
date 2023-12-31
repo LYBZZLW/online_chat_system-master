@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base  # 创建模型继承的
 from sqlalchemy.dialects.mysql import BIGINT, TEXT, DATETIME, VARCHAR, TINYINT  # 导入字段类型
 from sqlalchemy import Column  # 定义字段
 from werkzeug.security import check_password_hash  # 检查密码
-from app.configs import mysql_configs, channel_list
 
 # 创建父类
 Base = declarative_base()
@@ -46,23 +45,3 @@ class Channel(Base):
     __tablename__ = "channel"  # 指定表名称
     id = Column(BIGINT, primary_key=True)  # 编号
     name = Column(VARCHAR(20), nullable=False, unique=True, comment='频道名')  # 频道名
-
-
-if __name__ == "__main__":
-    """ 用于初始化数据库 """
-    from sqlalchemy import create_engine  # 创建连接引擎
-
-    # 创建连接引擎，连接地址、编码、是否输出日志
-    # 连接格式：'数据库系统名称+连接驱动名称://用户:密码@主机:端口/数据库名称'
-    engine = create_engine(
-        'mysql+mysqlconnector://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}?charset=utf8'.format(
-            **mysql_configs
-        ),
-        echo=True
-    )
-
-    # 元类映射到数据库中去
-    metadata.create_all(engine)
-    # 给频道添加数据
-    from app.models.crud import CRUD
-    CRUD.channel_init(channel_list)

@@ -11,4 +11,4 @@ COPY . /app
 RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 在容器内运行的命令
-CMD ["bash", "-c", "python ./app/models/models.py&&python ./main.py "]
+CMD ["bash", "-c", "python ./mysql_init.py&&python ./main.py "]

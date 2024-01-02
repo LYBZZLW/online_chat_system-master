@@ -1,6 +1,7 @@
 from app.models.models import metadata
 from app.configs import mysql_configs,channel_list
 from sqlalchemy import create_engine
+import mysql.connector  # 导入数据库连接驱动
 
 if __name__ == "__main__":
     """ 用于初始化数据库 """

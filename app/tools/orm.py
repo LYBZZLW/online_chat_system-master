@@ -2,7 +2,7 @@
 from sqlalchemy import create_engine  # 导入创建引擎工具
 from sqlalchemy.orm import sessionmaker  # 会话创建工具
 from app.configs import mysql_configs  # mysql配置
-
+import mysql.connector  # 导入数据连接驱动
 
 # 专门用于创建会话类
 class ORM:

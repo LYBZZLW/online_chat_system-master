@@ -25,10 +25,10 @@ class CRUD(object):
             if method == 1:
                 # 验证昵称
                 user = model.filter_by(name=data).first()
-            if method == 2:
+            elif method == 2:
                 # 验证邮箱
                 user = model.filter_by(email=data).first()
-            if method == 3:
+            elif method == 3:
                 # 验证手机
                 user = model.filter_by(phone=data).first()
         except Exception as e:
@@ -205,10 +205,10 @@ class CRUD(object):
     def channel_init(name_list):
         session = ORM.db()
         try:
-            session.query(Channel).delete()
             for name in name_list:
-                channel = Channel(name=name)
-                session.add(channel)
+                if len(session.query(Channel).filter_by(name=name).all()) == 0:  # 不重复添加频道
+                    channel = Channel(name=name)
+                    session.add(channel)
         except Exception as e:
             session.rollback()
         else:
